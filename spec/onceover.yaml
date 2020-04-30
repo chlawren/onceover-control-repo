@@ -1,0 +1,46 @@
+# Classes to be tested
+classes:
+  - role::puppetserver
+  - role::windows
+  - role::node
+  - role::monitoring
+
+# Nodes to tests classes on, this refers to a 'factset' or 'nodeset'
+# depending on whether you are running 'spec' or 'acceptance' tests
+nodes:
+  - RHEL-7.4
+  - CentOS-7.0-64
+  - Windows_Server-2012r2-64
+
+
+# You can group nodes here to save typing
+# We have created a 'non_windows_nodes' group because we can't
+# give you Windows vagrant boxes to test with because licensing,
+# we can give you fact sets though so go crazy with spec testing!
+node_groups:
+  centos_servers:
+    - RHEL-7.4
+    - CentOS-7.0-64
+  windows_servers:
+    - Windows_Server-2012r2-64
+  non_windows_servers:
+    include: 'all_nodes'
+    exclude: 'windows_servers'
+
+class_groups:
+  windows_roles:
+    - '/role::windows/'
+  centos_roles:
+    include: 'all_classes'
+    exclude: 'windows_roles'
+
+test_matrix:
+  - centos_servers:
+      classes: 'centos_roles'
+      tests: spec
+  - windows_servers:
+      classes: 'windows_roles'
+      tests: spec
+  - non_windows_servers:
+      classes: 'all_classes'
+      tests: 'acceptance'

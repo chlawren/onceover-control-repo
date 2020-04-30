@@ -31,4 +31,8 @@ class profile::puppetserver::bootstrap {
     group  => 'pe-puppet',
     mode   => '0750',
   }
+
+  service { 'pe-puppetserver':
+    ensure => running
+  }
 }

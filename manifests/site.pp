@@ -39,9 +39,16 @@ node 'puppet' {
 node default {
 
     if $trusted['extensions']['pp_role'] {
+
       include "role::${trusted['extensions']['pp_role']}"
     
+    } elseif $facts['os']['family'] == 'Windows' {
+
+      include role::windows
+
     } else {
-      include role::node
+
+      notify('unsupported OS applying base role that includes nothing!!'); include role::generic
+
     }
 }

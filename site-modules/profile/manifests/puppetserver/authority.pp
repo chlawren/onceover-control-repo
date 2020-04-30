@@ -1,7 +1,7 @@
 class profile::puppetserver::authority (
 
   String $jwt_secret = 'undef',
-  String $loglevel   = 'info',
+  String $loginfo    = 'info',
   String $validity   = '0',
   String $ensure     = 'latest',
   Hash $config       = {},
@@ -19,7 +19,7 @@ class profile::puppetserver::authority (
     ensure => $ensure,
     config => {
       general => {
-        loglevel => $loglevel,
+        loglevel => $loginfo,
       },
       jwt_token => {
         secret   => $jwt_secret,

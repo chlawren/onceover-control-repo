@@ -14,3 +14,4 @@ profile::base::time::ntp_servers:
   - 2.uk.pool.ntp.org
 profile::base::ssh: true
 profile::base::motd: true
+profile::monitoring:nfs_mount: true
